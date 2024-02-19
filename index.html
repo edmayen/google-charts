@@ -1,0 +1,179 @@
+<html>
+	<head>
+		<!-- Metadatos para seleccionar charset y hacer responsive -->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Título de la web -->
+		<title>10 años de medición de pobreza en México, avances y retos en política social</title>
+
+		<!-- Injectamos el loader de Google -->
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+		<!-- Injectamos el ficheros Javascript y hoja de estilos de nuesto Dashboard -->
+		<link rel="stylesheet" href="style.css">
+	</head>
+
+	<body>
+		<!-- Título superior -->
+		<h1>10 años de medición de pobreza en México, avances y retos en política social</h1>
+
+		<!-- Grid con todos los paneles -->
+		<div class="dashboard-wrapper">
+			<div id='p1' class='panel'><h2>Número de personas en situación de pobreza extrema en la Ciudad de México, 2008-2018</h2> <div id='p1Chart'></div> </div>
+			<div id='p2' class='panel'><h2>Rezago educativo a nivel nacional, 2008-2018</h2> <div id='p2Chart'></div> </div>
+			<div id='p3' class='panel'><h2>Población con carencia social a nivel nacional, 2008-2018</h2> <div id='p3Chart'></div> </div>
+			<div id='p4' class='panel'><h2>Porcentaje de población en situación de pobreza</h2> <div id='p4Chart'></div> </div>
+			<div id='p5' class='panel'><h2>Número de personas en situación de pobreza extrema, según entidad federativa, 2018</h2> <div id='p5Chart'></div> </div>
+		</div>
+
+		<script>
+			google.charts.load('current', {'packages': ['corechart', 'line', 'geochart', 'bar'],  'mapsApiKey': 'AIzaSyBYWobxtAJB6XSU64TlxmpXUkyrvMTDX5A'});
+			google.charts.setOnLoadCallback(drawCharts);
+
+			function drawCharts() {
+				drawChartP1();
+				drawChartP2();
+				drawChartP3();
+				drawChartP4();
+				drawChartP5();
+			}
+
+
+			function drawChartP1 () {
+				var data = new google.visualization.DataTable();
+				data.addColumn('number', 'X');
+				data.addColumn('number', 'Miles de personas');
+
+				data.addRows([
+					[2008,189.1],
+					[2010,192.4],
+					[2012,219],
+					[2014,150.5],
+					[2016,155.1],
+					[2018,153.3]
+				]);
+
+				var options = {
+					hAxis: {
+						tittle: 'Años'
+					},
+					vAxis: {
+						tittle: 'Número de personas'
+					}
+				};
+
+				var chart = new google.visualization.LineChart(document.getElementById('p1Chart'));
+				chart.draw(data, options);
+			}
+
+			function drawChartP2 () {
+				var data = google.visualization.arrayToDataTable([
+					['Estado', 'Popularity'],
+					['Aguascalientes', 15.6],
+					['Baja California', 59.3],
+					['Baja California Sur', 12.6],
+					['Campeche', 93.0],
+					['Coahuila', 44.5],
+					['Colima', 18.2],
+					['Chiapas', 1623.3],
+					['Chihuahua', 99.8],
+					['Distrito Federal', 153.3],
+					['Durango', 40.4],
+					['Guanajuato', 253.3],
+					['Guerrero', 971.4],
+					['Hidalgo', 181.5],
+					['Jalisco', 244.5],
+					['México', 865.7],
+					['Michoacán', 284.4],
+					['Morelos', 147],
+					['Nayarit', 76.2],
+					['Nuevo León', 25.2],
+					['Oaxaca', 951.8],
+					['Puebla', 551.9],
+					['Querétaro', 41.2],
+					['Quitana Roo', 59.8],
+					['San Luis Potosí', 207.6],
+					['Sinaloa', 82.3],
+					['Sonora', 80.6],
+					['Tabasco', 302.5],
+					['Tamaulipas', 121.8],
+					['Tlaxcala', 41.7],
+					['Veracruz', 1457.9],
+					['Yucatán', 147.1],
+					['Zacatecas', 54.4]
+				
+				]);
+
+				var options = {
+					region: 'MX',
+          			displayMode: 'regions',
+          			resolution: 'provinces',
+					colorAxis:  {minValue: 0, maxValue: 1650, colors: ['#00FF00', '#FF0000']},
+					backgroundColor: '#81d4fa',
+					datalessRegionColor: '#fdf1f1',
+					defaultColor: '#fdf1f1'
+				};
+				var chart = new google.visualization.GeoChart(document.getElementById('p5Chart'));
+				chart.draw(data, options)
+			}
+		
+			function drawChartP3 () {
+				var data = google.visualization.arrayToDataTable([
+					['Año', 'Millones de personas'],
+					['2008', 24.5],
+					['2010', 23.7],
+					['2012', 22.6],
+					['2014', 22.4],
+					['2016', 21.3],
+					['2018', 21.1]
+				]);
+
+				var options = {
+					legend: { position: 'none' },
+				};
+
+				var chart = new google.visualization.Histogram(document.getElementById('p2Chart'));
+        		chart.draw(data, options);
+			}
+
+			function drawChartP4 () {
+				var data = google.visualization.arrayToDataTable([
+					['Year', 'Población con al menos una carencia social', 'Población con al menos tres carencias sociales'],
+					['2008',  85.5, 35.4],
+					['2010',  85, 32.4],
+					['2012',  86.9, 28.1],
+					['2014',  86.8, 26.5],
+					['2016',  86.3, 23],
+					['2018',  89.1, 23.5]
+				]);
+
+				var options = {
+				
+					hAxis: {title: 'Año',  titleTextStyle: {color: '#333'}},
+					vAxis: {minValue: 0}
+				};
+
+				var chart = new google.visualization.AreaChart(document.getElementById('p3Chart'));
+        		chart.draw(data, options);
+			}
+
+			function drawChartP5() {
+				var data = google.visualization.arrayToDataTable([
+					['Año', 'Distrito Federal', 'Estado de México', 'Querétaro'],
+					['2014', 28.4, 49.6, 34.2],
+					['2016', 27.6, 47.9, 31.1],
+					['2018', 30.6, 42.7, 27.6]
+				]);
+
+				var options = {};
+
+
+				var chart = new google.charts.Bar(document.getElementById('p4Chart'));
+        		chart.draw(data, options);
+			}
+
+		</script>
+
+	</body>
+</html>
